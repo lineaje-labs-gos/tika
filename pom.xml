@@ -1,5 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <!--
   Licensed to the Apache Software Foundation (ASF) under one
   or more contributor license agreements.  See the NOTICE file
@@ -18,22 +16,18 @@
   specific language governing permissions and limitations
   under the License.
 -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.apache.tika</groupId>
     <artifactId>tika-parent</artifactId>
     <version>3.2.1</version>
     <relativePath>tika-parent/pom.xml</relativePath>
   </parent>
-
   <artifactId>tika</artifactId>
   <packaging>pom</packaging>
   <name>Apache Tika</name>
   <url>https://tika.apache.org</url>
-
   <modules>
     <module>tika-parent</module>
     <module>tika-bom</module>
@@ -57,7 +51,6 @@
     <module>tika-java7</module>
     <module>tika-handlers</module>
   </modules>
-
   <profiles>
     <profile>
       <id>apache-release</id>
@@ -101,30 +94,30 @@
                 <phase>deploy</phase>
                 <configuration>
                   <target>
-                    <mkdir dir="${basedir}/target/${project.version}" />
+                    <mkdir dir="${basedir}/target/${project.version}"/>
                     <copy todir="${basedir}/target/${project.version}" flatten="true">
                       <fileset dir="${basedir}">
-                        <include name="CHANGES.txt" />
-                        <include name="target/*-src.zip*" />
-                        <include name="tika-parsers/tika-parsers-extended/tika-parser-scientific-package/target/tika-parser-scientific-package-${project.version}.jar*" />
-                        <include name="tika-parsers/tika-parsers-extended/tika-parser-sqlite3-package/target/tika-parser-sqlite3-package-${project.version}.jar*" />
-                        <include name="tika-parsers/tika-parsers-ml/tika-parser-nlp-package/target/tika-parser-nlp-package-${project.version}.jar*" />
-                        <include name="tika-app/target/tika-app-${project.version}.jar*" />
-                        <include name="tika-server/tika-server-standard/target/tika-server-standard-${project.version}.jar*" />
-                        <include name="tika-server/tika-server-standard/target/tika-server-standard-${project.version}-bin.tgz*" />
-                        <include name="tika-server/tika-server-standard/target/tika-server-standard-${project.version}-bin.zip*" />
-                        <include name="tika-eval/tika-eval-app/target/tika-eval-app-${project.version}.jar*" />
+                        <include name="CHANGES.txt"/>
+                        <include name="target/*-src.zip*"/>
+                        <include name="tika-parsers/tika-parsers-extended/tika-parser-scientific-package/target/tika-parser-scientific-package-${project.version}.jar*"/>
+                        <include name="tika-parsers/tika-parsers-extended/tika-parser-sqlite3-package/target/tika-parser-sqlite3-package-${project.version}.jar*"/>
+                        <include name="tika-parsers/tika-parsers-ml/tika-parser-nlp-package/target/tika-parser-nlp-package-${project.version}.jar*"/>
+                        <include name="tika-app/target/tika-app-${project.version}.jar*"/>
+                        <include name="tika-server/tika-server-standard/target/tika-server-standard-${project.version}.jar*"/>
+                        <include name="tika-server/tika-server-standard/target/tika-server-standard-${project.version}-bin.tgz*"/>
+                        <include name="tika-server/tika-server-standard/target/tika-server-standard-${project.version}-bin.zip*"/>
+                        <include name="tika-eval/tika-eval-app/target/tika-eval-app-${project.version}.jar*"/>
                       </fileset>
                     </copy>
                     <checksum algorithm="SHA-512" fileext=".sha512">
                       <fileset dir="${basedir}/target/${project.version}">
-                        <include name="*.tgz" />
-                        <include name="*.zip" />
-                        <include name="*.?ar" />
+                        <include name="*.tgz"/>
+                        <include name="*.zip"/>
+                        <include name="*.?ar"/>
                       </fileset>
                     </checksum>
-                    <checksum file="${basedir}/target/${project.version}/tika-${project.version}-src.zip" algorithm="SHA-512" property="checksum" />
-<!-- this spacing is less than ideal, but if you indent here, the vote.txt file will have the leading spaces -->
+                    <checksum file="${basedir}/target/${project.version}/tika-${project.version}-src.zip" algorithm="SHA-512" property="checksum"/>
+                    <!-- this spacing is less than ideal, but if you indent here, the vote.txt file will have the leading spaces -->
                     <echo file="${basedir}/target/vote.txt">
 From: ${username}@apache.org
 To: dev@tika.apache.org
@@ -150,7 +143,7 @@ least three +1 Tika PMC votes are cast.
 [ ] +1 Release this package as Apache Tika ${project.version}
 [ ] -1 Do not release this package because...${line.separator}
                     </echo>
-                    <echo />
+                    <echo/>
                     <echo>
                       The release candidate has been prepared in:
 
@@ -164,7 +157,7 @@ least three +1 Tika PMC votes are cast.
 
                       file://${basedir}/target/vote.txt
                     </echo>
-                    <echo />
+                    <echo/>
                   </target>
                 </configuration>
               </execution>
@@ -181,7 +174,6 @@ least three +1 Tika PMC votes are cast.
       </build>
     </profile>
   </profiles>
-
   <build>
     <plugins>
       <plugin>
@@ -196,6 +188,26 @@ least three +1 Tika PMC votes are cast.
             <exclude>tika-bundle/src/main/resources/META-INF/MANIFEST.MF</exclude>
             <exclude>.gitattributes</exclude>
           </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>3.2.4</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <gpgArguments>
+            <arg>--pinentry-mode</arg>
+            <arg>loopback</arg>
+          </gpgArguments>
         </configuration>
       </plugin>
     </plugins>
@@ -215,8 +227,17 @@ least three +1 Tika PMC votes are cast.
     <system>Jenkins</system>
     <url>https://ci-builds.apache.org/job/Tika/job/tika-main-jdk8/</url>
   </ciManagement>
-
   <scm>
-    <tag>3.2.1-rc2</tag>
+    <connection>scm:git:tika</connection>
+    <developerConnection>scm:git:tika</developerConnection>
+    <url>tika</url>
+    <tag>3.2.1-lineaje-01</tag>
   </scm>
+  <version>3.2.1-lineaje-01</version>
+  <contributors>
+    <contributor>
+      <name>Lineaje DepFixer</name>
+      <email>221268890+Lineaje-DepFixer@users.noreply.github.com</email>
+    </contributor>
+  </contributors>
 </project>
